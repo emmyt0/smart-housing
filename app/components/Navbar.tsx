@@ -4,102 +4,137 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, User, Globe, Sparkles } from "lucide-react";
 
+const LOCATIONS = [
+  "Gemikonagi",
+  "Lefke",
+  "Lefke Merkezi",
+  "Guzelyurt",
+  "Doganci",
+  "Yesilyurt",
+  "Yedidalga",
+];
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState<"EN" | "TR">("EN");
+  const [activeLocation, setActiveLocation] = useState("Gemikonagi");
 
   return (
-    <nav className="w-full border-b border-gray-200/50 bg-white/90 backdrop-blur-xl supports-[backdrop-filter]:bg-white/60 sticky top-0 z-50">
+    <nav className="w-full border-b border-gray-200/60 bg-white/90 backdrop-blur-xl sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-5">
+        {/* TOP ROW */}
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center  gap-2 group ">
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
-              <div className="relative flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg">
-                <Sparkles size={18} className="text-white" />
-              </div>
+              <div className="absolute -inset-1 " />
+              
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-              MyApp
+            <span className="text-red-600    ">
+              <p className=" text-2xl  font-bold"> smart-house</p>
+              
             </span>
           </Link>
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-10">
-            <Link 
-              href="/shared" 
-              className="relative text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200 group"
-            >
-              Shared
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link 
-              href="/seller" 
-              className="relative text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200 group"
-            >
-              Seller
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-300"></span>
-            </Link>
+            {["Shared", "Seller"].map((item) => (
+              <Link
+                key={item}
+                href={`/${item.toLowerCase()}`}
+                className="relative text-sm font-medium text-gray-700 hover:text-gray-900 group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-300" />
+              </Link>
+            ))}
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-4">
-            {/* Language Switch */}
+            {/* Language */}
             <button
               onClick={() => setLang(lang === "EN" ? "TR" : "EN")}
-              className="flex items-center gap-2 rounded-2xl border border-gray-300/60 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50/80 hover:border-gray-400/30 transition-all duration-200 hover:shadow-sm backdrop-blur-sm"
+              className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
             >
-              <Globe size={16} className="text-gray-600" />
-              <span className="font-semibold">{lang}</span>
-              <div className={`w-8 h-5 flex items-center rounded-full p-0.5 transition-all duration-300 ${lang === "TR" ? "bg-blue-500 justify-end" : "bg-gray-300 justify-start"}`}>
-                <div className="w-3.5 h-3.5 bg-white rounded-full shadow-sm"></div>
-              </div>
+              <Globe size={16} />
+              {lang}
             </button>
 
             {/* Profile */}
-            <button className="rounded-2xl p-2.5 hover:bg-gray-50/80 transition-all duration-200 hover:shadow-sm border border-transparent hover:border-gray-300/30">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full opacity-0 hover:opacity-20 transition duration-300"></div>
-                <User size={24} className="text-gray-700" />
-              </div>
+            <button className="rounded-full p-2 hover:bg-gray-50 transition">
+              <User size={22} className="text-gray-700" />
             </button>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu */}
             <button
               onClick={() => setOpen(!open)}
-              className="md:hidden rounded-2xl p-2.5 hover:bg-gray-50/80 transition-all duration-200 hover:shadow-sm"
+              className="md:hidden rounded-full p-2 hover:bg-gray-50 transition"
             >
-              {open ? (
-                <X className="text-gray-700" size={24} />
-              ) : (
-                <Menu className="text-gray-700" size={24} />
-              )}
+              {open ? <X size={22} /> : <Menu size={22} />}
             </button>
+          </div>
+        </div>
+
+        {/* LOCATION PILLS (Airbnb-style) */}
+        <div className="hidden md:flex justify-center pb-4">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar">
+            {LOCATIONS.map((location) => {
+              const active = activeLocation === location;
+
+              return (
+                <button
+                  key={location}
+                  onClick={() => setActiveLocation(location)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition
+                    ${
+                      active
+                        ? "bg-black text-white shadow-sm"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+                >
+                  {location}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* MOBILE MENU */}
       {open && (
-        <div className="md:hidden border-t border-gray-200/50 bg-white/95 backdrop-blur-xl animate-in slide-in-from-top-4 duration-300">
-          <div className="flex flex-col gap-1 px-5 py-4">
-            <Link
-              href="/shared"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50/80 transition-all duration-200 group"
-            >
-              <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition duration-300"></div>
-              Shared
-            </Link>
-            <Link
-              href="/seller"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50/80 transition-all duration-200 group"
-            >
-              <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition duration-300"></div>
-              Seller
-            </Link>
+        <div className="md:hidden border-t bg-white">
+          <div className="flex flex-col gap-2 px-5 py-4">
+            {["Shared", "Seller"].map((item) => (
+              <Link
+                key={item}
+                href={`/${item.toLowerCase()}`}
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                {item}
+              </Link>
+            ))}
+
+            <div className="pt-3 border-t">
+              {LOCATIONS.map((location) => (
+                <button
+                  key={location}
+                  onClick={() => {
+                    setActiveLocation(location);
+                    setOpen(false);
+                  }}
+                  className={`w-full text-left rounded-xl px-4 py-2 text-sm transition
+                    ${
+                      activeLocation === location
+                        ? "bg-black text-white"
+                        : "hover:bg-gray-100"
+                    }`}
+                >
+                  {location}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}
