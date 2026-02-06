@@ -1,1 +1,12 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: var(--font-outfit);
+}
+
+body {
+  font-family: var(--font-outfit), system-ui, -apple-system, sans-serif;
+}

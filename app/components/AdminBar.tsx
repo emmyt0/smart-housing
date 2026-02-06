@@ -3,15 +3,11 @@
 import React, { useState } from "react";
 import {
   Users,
-  BookOpen,
   X,
   Home,
   Menu,
   LogOut,
-  DollarSign,
-  TrendingUp,
   HandCoins,
-  Network,
 } from "lucide-react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
@@ -52,36 +48,17 @@ const AdminBar = ({ onMenuClick }: AdminBarProps) => {
       icon: <Home className="h-5 w-5 text-[#4C528C]" />,
     },
     {
-      id: "Manage Users",
-      label: "Manage Users",
+      id: "Manage Property",
+      label: "Manage property",
       icon: <Users className="h-5 w-5 text-gray-400" />,
       category: "Data",
     },
     {
-      id: "Withdraws",
-      label: "Withdraw Requests",
+      id: "Property Listings",
+      label: "Property Listings",
       icon: <HandCoins className="h-5 w-5 text-gray-400" />,
     },
-    {
-      id: "User Referrals",
-      label: "User Referrals",
-      icon: <Network className="h-5 w-5 text-gray-400" />,
-    },
-    {
-      id: "Update Users",
-      label: "Update Users",
-      icon: <BookOpen className="h-5 w-5 text-gray-400" />,
-    },
-    {
-      id: "Update Profits",
-      label: "Update Profits",
-      icon: <TrendingUp className="h-5 w-5 text-gray-400" />,
-    },
-    {
-      id: "All Transactions",
-      label: "All Transactions",
-      icon: <DollarSign className="h-5 w-5 text-gray-400" />,
-    },
+    
   ];
 
   return (
