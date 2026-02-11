@@ -31,7 +31,7 @@ export default function Navbar() {
               
             </div>
             <span className="text-red-600    ">
-              <p className=" text-2xl  font-bold"> smart-house</p>
+              <p className=" text-2xl  font-bold"> smart-housing</p>
               
             </span>
           </Link>
