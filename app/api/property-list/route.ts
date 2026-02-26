@@ -1,12 +1,11 @@
 import clientPromise from "@/lib/db";
-import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
     const client = await clientPromise;
 
-    // 🔥 MAKE SURE DB NAME MATCHES POST
+    // Make sure this DB name matches your POST route
     const db = client.db("testdb");
 
     const properties = await db
@@ -19,32 +18,7 @@ export async function GET() {
 
     return NextResponse.json(properties);
   } catch (error: any) {
-    console.error("❌ GET ERROR:", error.message);
-
-    return NextResponse.json(
-      { error: error.message },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(req: Request) {
-  try {
-    const { id } = await req.json();
-
-    const client = await clientPromise;
-    const db = client.db("testdb");
-
-    const result = await db.collection("properties").deleteOne({
-      _id: new ObjectId(id),
-    });
-
-    return NextResponse.json({
-      message: "Deleted",
-      deletedCount: result.deletedCount,
-    });
-  } catch (error: any) {
-    console.error("❌ DELETE ERROR:", error.message);
+    console.error("❌ GET ERROR:", error);
 
     return NextResponse.json(
       { error: error.message },

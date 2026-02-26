@@ -1,16 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Trash2,
-  Bed,
-  Bath,
-  Square,
-  MapPin,
-  Calendar,
-  Star,
-  Home,
-} from "lucide-react";
+import { Trash2, MapPin, Home } from "lucide-react";
 import Image from "next/image";
 
 type DBProperty = {
@@ -25,10 +16,9 @@ type DBProperty = {
   location: {
     addressText: string;
   };
-  images: {
-    primary: string;
+  images?: {
+    primary?: string;
   };
-  createdAt?: string;
 };
 
 export default function PropertyListing() {
@@ -36,7 +26,6 @@ export default function PropertyListing() {
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  // Fetch properties
   useEffect(() => {
     fetchProperties();
   }, []);
@@ -44,20 +33,32 @@ export default function PropertyListing() {
   const fetchProperties = async () => {
     try {
       const res = await fetch("/api/property-list");
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch properties");
+      }
+
       const data = await res.json();
-      setProperties(data);
+
+      if (Array.isArray(data)) {
+        setProperties(data);
+      } else {
+        setProperties([]);
+      }
     } catch (error) {
-      console.error("Failed to fetch properties");
+      console.error("Fetch error:", error);
+      setProperties([]);
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ NEW DELETE FUNCTION (separate API)
   const handleDelete = async (propertyId: string) => {
     setDeletingId(propertyId);
 
     try {
-      await fetch("/api/properties", {
+      const res = await fetch("/api/delete-property", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -65,12 +66,20 @@ export default function PropertyListing() {
         body: JSON.stringify({ id: propertyId }),
       });
 
-      // Remove from UI instantly
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error("Delete failed:", data);
+        return;
+      }
+
+      // Remove from UI only after successful delete
       setProperties((prev) =>
         prev.filter((property) => property._id !== propertyId)
       );
+
     } catch (error) {
-      console.error("Delete failed");
+      console.error("Delete error:", error);
     } finally {
       setDeletingId(null);
     }
@@ -86,9 +95,7 @@ export default function PropertyListing() {
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           Property Listings
         </h1>
-        <p className="text-gray-600">
-          Manage your listed properties
-        </p>
+        <p className="text-gray-600">Manage your listed properties</p>
       </div>
 
       {properties.length === 0 && (
@@ -112,16 +119,17 @@ export default function PropertyListing() {
               <div className="flex gap-4 flex-1">
 
                 {/* IMAGE */}
-                <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-gray-100">
                   {property.images?.primary ? (
                     <Image
                       src={property.images.primary}
                       alt={property.title}
                       fill
                       className="object-cover"
+                      unoptimized
                     />
                   ) : (
-                    <div className="bg-gray-200 w-full h-full" />
+                    <div className="w-full h-full bg-gray-200" />
                   )}
                 </div>
 
@@ -135,6 +143,7 @@ export default function PropertyListing() {
                     <span className="bg-gray-100 px-2 py-1 rounded">
                       {property.propertyType}
                     </span>
+
                     <div className="flex items-center gap-1">
                       <MapPin className="w-3 h-3" />
                       {property.location?.addressText}
@@ -142,10 +151,10 @@ export default function PropertyListing() {
                   </div>
 
                   <div className="mt-2 text-xl font-bold text-gray-900">
-                    {property.pricing.currency}
-                    {property.pricing.amount.toLocaleString()}
+                    {property.pricing?.currency}
+                    {property.pricing?.amount?.toLocaleString()}
                     <span className="text-sm text-blue-700 ml-2">
-                      /year
+                      /{property.pricing?.period || "year"}
                     </span>
                   </div>
                 </div>
@@ -155,7 +164,7 @@ export default function PropertyListing() {
               <button
                 onClick={() => handleDelete(property._id)}
                 disabled={deletingId === property._id}
-                className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-700 rounded-lg hover:bg-red-100"
+                className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 disabled:opacity-60"
               >
                 {deletingId === property._id ? (
                   <>
@@ -173,16 +182,6 @@ export default function PropertyListing() {
           </div>
         ))}
       </div>
-
-      {properties.length > 0 && (
-        <div className="mt-6 pt-6 border-t border-gray-200 text-sm text-gray-600">
-          Showing{" "}
-          <span className="font-semibold text-gray-900">
-            {properties.length}
-          </span>{" "}
-          properties
-        </div>
-      )}
     </div>
   );
 }
