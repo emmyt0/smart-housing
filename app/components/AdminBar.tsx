@@ -9,7 +9,6 @@ import {
   LogOut,
   HandCoins,
 } from "lucide-react";
-import Image from "next/image";
 import { signOut } from "next-auth/react";
 
 type AdminBarProps = {
@@ -62,7 +61,7 @@ const AdminBar = ({ onMenuClick }: AdminBarProps) => {
   ];
 
   return (
-    <div className="min-h-screen flex bg-gray-100">
+    <div className="min-h-screen flex ">
       {/* Overlay (mobile only) */}
       {isOpen && (
         <div
@@ -75,7 +74,7 @@ const AdminBar = ({ onMenuClick }: AdminBarProps) => {
       <aside
         className={`
           fixed top-0 left-0 z-50 h-full w-72
-          bg-gray-900 text-white
+          bg-black text-white
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0
@@ -90,8 +89,10 @@ const AdminBar = ({ onMenuClick }: AdminBarProps) => {
 
         {/* Logo + Admin */}
         <div className="flex flex-col items-center mb-8">
-          <Image src="/kodi.png" alt="Logo" width={100} height={100} />
-          <span className="mt-2 text-sm text-teal-400">Admin Name</span>
+          <span className="text-red-600 py-4 ">
+              <p className=" text-2xl  font-bold"> lefke-aprtments</p>
+              
+            </span>
         </div>
 
         {/* Menu */}
@@ -111,7 +112,7 @@ const AdminBar = ({ onMenuClick }: AdminBarProps) => {
                   transition
                   ${
                     activeMenu === item.id
-                      ? "bg-gray-800 text-white"
+                      ? "bg-white text-black"
                       : "text-gray-300 hover:bg-gray-800"
                   }
                 `}
@@ -137,9 +138,9 @@ const AdminBar = ({ onMenuClick }: AdminBarProps) => {
       {/* Main content */}
       <div className="flex-1 lg:ml-62 p-2">
         {/* Top bar (mobile only) */}
-        <header className="bg-white shadow p-2 flex items-center lg:hidden">
+        <header className="bg-black shadow p-2 flex items-center lg:hidden rounded-md">
           <button onClick={toggleSidebar} aria-label="Open sidebar">
-            <Menu className="h-7 w-7 text-gray-700" />
+            <Menu className="h-7 w-7 text-white" />
           </button>
         </header>
 

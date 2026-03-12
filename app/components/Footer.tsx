@@ -73,42 +73,10 @@ export default function Footer() {
               Connecting EUL students with trusted accommodation. Find your perfect home near campus with verified listings and secure booking.
             </p>
             
-            {/* Trust Badges */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-800/50 rounded-full">
-                <Shield className="w-4 h-4 text-blue-400" />
-                <span className="text-sm text-gray-300">Verified Listings</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-800/50 rounded-full">
-                <Users className="w-4 h-4 text-green-400" />
-                <span className="text-sm text-gray-300">10K+ Students</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-800/50 rounded-full">
-                <Award className="w-4 h-4 text-yellow-400" />
-                <span className="text-sm text-gray-300">Trusted Platform</span>
-              </div>
-            </div>
+            
           </div>
           
-          {/* Stats Section */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-8">
-            <div className="text-center lg:text-left">
-              <div className="text-3xl lg:text-4xl font-bold text-white mb-1">500+</div>
-              <p className="text-sm text-gray-400">Properties</p>
-            </div>
-            <div className="text-center lg:text-left">
-              <div className="text-3xl lg:text-4xl font-bold text-white mb-1">1.2k+</div>
-              <p className="text-sm text-gray-400">Happy Students</p>
-            </div>
-            <div className="text-center lg:text-left">
-              <div className="text-3xl lg:text-4xl font-bold text-white mb-1">50+</div>
-              <p className="text-sm text-gray-400">Areas Covered</p>
-            </div>
-            <div className="text-center lg:text-left">
-              <div className="text-3xl lg:text-4xl font-bold text-white mb-1">24/7</div>
-              <p className="text-sm text-gray-400">Support</p>
-            </div>
-          </div>
+          
         </div>
 
         {/* Middle Section - Links Grid */}
@@ -155,26 +123,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Support & Legal */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-blue-400 mb-4">
-              Support
-            </h3>
-            <ul className="space-y-3">
-              {supportLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors group flex items-center gap-2"
-                  >
-                    <ChevronRight className="w-3 h-3 text-gray-600 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
+          
           {/* Contact Info & Newsletter */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-blue-400 mb-4">

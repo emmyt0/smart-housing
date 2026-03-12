@@ -5,13 +5,12 @@ import Link from "next/link";
 import { Menu, X, User, Globe, Sparkles } from "lucide-react";
 
 const LOCATIONS = [
-  "Gemikonagi",
-  "Lefke",
-  "Lefke Merkezi",
-  "Guzelyurt",
-  "Doganci",
-  "Yesilyurt",
-  "Yedidalga",
+"Studio (1+0)",
+"1+1 ",
+"2+1 ",
+"3+1 ",
+"House",
+"Single Room",
 ];
 
 export default function Navbar() {
@@ -31,7 +30,7 @@ export default function Navbar() {
               
             </div>
             <span className="text-red-600    ">
-              <p className=" text-2xl  font-bold"> smart-housing</p>
+              <p className=" text-2xl  font-bold"> lefke-aprtments</p>
               
             </span>
           </Link>

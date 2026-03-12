@@ -21,11 +21,7 @@ export default function AdminLayout() {
                   Welcome back! Here's what's happening with your properties today.
                 </p>
               </div>
-              <div className="mt-4 md:mt-0">
-                <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-                  View Report
-                </button>
-              </div>
+              
             </div>
 
             {/* Stats Cards */}
@@ -42,43 +38,12 @@ export default function AdminLayout() {
                   </span>
                 </div>
                 <h3 className="text-gray-500 text-sm font-medium">Total Property</h3>
-                <p className="text-3xl font-bold mt-2">1,600</p>
-                <p className="text-gray-400 text-sm mt-2">~20% from last month</p>
+                <p className="text-3xl font-bold mt-2">8</p>
               </div>
 
-              {/* Number of Sales Card */}
-              <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-purple-50 rounded-lg">
-                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <span className="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
-                    <TrendingUp className="w-4 h-4 inline mr-1" />
-                    +20%
-                  </span>
-                </div>
-                <h3 className="text-gray-500 text-sm font-medium">Number of Sales</h3>
-                <p className="text-3xl font-bold mt-2">410</p>
-                <p className="text-gray-400 text-sm mt-2">~20% from last month</p>
-              </div>
+              
 
-              {/* Total Earnings Card */}
-              <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-green-50 rounded-lg">
-                    <DollarSign className="w-6 h-6 text-green-600" />
-                  </div>
-                  <span className="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
-                    <TrendingUp className="w-4 h-4 inline mr-1" />
-                    +20%
-                  </span>
-                </div>
-                <h3 className="text-gray-500 text-sm font-medium">Total Earnings</h3>
-                <p className="text-3xl font-bold mt-2">$160k</p>
-                <p className="text-gray-400 text-sm mt-2">~20% from last month</p>
-              </div>
+              
             </div>
 
             {/* Welcome Message Section */}
