@@ -3,7 +3,6 @@
 "use client";
 
 import { 
-  Home, 
   MapPin, 
   Mail, 
   Phone, 
@@ -13,9 +12,6 @@ import {
   Linkedin,
   ChevronRight,
   Heart,
-  Shield,
-  Users,
-  Award,
   Clock
 } from "lucide-react";
 import Link from "next/link";

@@ -2,15 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, User, Globe, Sparkles } from "lucide-react";
+import { Menu, X, User, Globe, Home } from "lucide-react";
 
 const LOCATIONS = [
-"Studio (1+0)",
-"1+1 ",
-"2+1 ",
-"3+1 ",
-"House",
-"Single Room",
+  "Studio (1+0)",
+  "1+1",
+  "2+1",
+  "3+1",
+  "Single Room",
 ];
 
 export default function Navbar() {
@@ -19,65 +18,60 @@ export default function Navbar() {
   const [activeLocation, setActiveLocation] = useState("Gemikonagi");
 
   return (
-    <nav className="w-full border-b border-gray-200/60 bg-white/90 backdrop-blur-xl sticky top-0 z-50">
-      <div className="mx-auto max-w-7xl px-5">
+    <nav className="w-full border-b border-gray-100 bg-white/95 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* TOP ROW */}
         <div className="flex h-20 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center  gap-2 group ">
+          {/* Logo with modern design */}
+          <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
-              <div className="absolute -inset-1 " />
-              
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-300" />
+              <div className="relative bg-gradient-to-br from-red-500 to-red-600 rounded-lg p-2">
+                <Home size={24} className="text-white" />
+              </div>
             </div>
-            <span className="text-red-600    ">
-              <p className=" text-2xl  font-bold"> lefke-aprtments</p>
-              
+            <span className="flex flex-col">
+              <p className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                smart-housing
+              </p>
+              <p className="text-xs text-gray-500 -mt-1">Find Your Perfect apartment</p>
             </span>
           </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-10">
-            {["Shared", "Seller"].map((item) => (
-              <Link
-                key={item}
-                href={`/${item.toLowerCase()}`}
-                className="relative text-sm font-medium text-gray-700 hover:text-gray-900 group"
-              >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
-          </div>
+          {/* Empty div to maintain spacing - no navigation links */}
+          <div className="hidden md:block"></div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-4">
-            {/* Language */}
+          {/* Actions with modern styling */}
+          <div className="flex items-center gap-3">
+            
+
+            {/* Language with modern design */}
             <button
               onClick={() => setLang(lang === "EN" ? "TR" : "EN")}
-              className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+              className="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-300 hover:bg-gray-50 transition-all duration-300 shadow-sm"
             >
-              <Globe size={16} />
-              {lang}
+              <Globe size={16} className="text-gray-500" />
+              <span className="font-semibold">{lang}</span>
             </button>
 
-            {/* Profile */}
-            <button className="rounded-full p-2 hover:bg-gray-50 transition">
-              <User size={22} className="text-gray-700" />
+            {/* Profile with gradient */}
+            <button className="rounded-full p-2 hover:bg-gray-50 transition-all duration-300 border border-gray-200">
+              <User size={20} className="text-gray-600" />
             </button>
 
             {/* Mobile Menu */}
             <button
               onClick={() => setOpen(!open)}
-              className="md:hidden rounded-full p-2 hover:bg-gray-50 transition"
+              className="md:hidden rounded-full p-2 hover:bg-gray-50 transition-all duration-300 border border-gray-200"
             >
-              {open ? <X size={22} /> : <Menu size={22} />}
+              {open ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
-        {/* LOCATION PILLS (Airbnb-style) */}
+        {/* LOCATION PILLS with modern design */}
         <div className="hidden md:flex justify-center pb-4">
-          <div className="flex gap-2 overflow-x-auto no-scrollbar">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar bg-gray-50/80 p-1.5 rounded-2xl backdrop-blur-sm">
             {LOCATIONS.map((location) => {
               const active = activeLocation === location;
 
@@ -85,11 +79,11 @@ export default function Navbar() {
                 <button
                   key={location}
                   onClick={() => setActiveLocation(location)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition
+                  className={`px-5 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300
                     ${
                       active
-                        ? "bg-black text-white shadow-sm"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        ? "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/25 scale-105"
+                        : "text-gray-600 hover:bg-white/80 hover:text-gray-900"
                     }`}
                 >
                   {location}
@@ -100,22 +94,15 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE MENU with modern design */}
       {open && (
-        <div className="md:hidden border-t bg-white">
-          <div className="flex flex-col gap-2 px-5 py-4">
-            {["Shared", "Seller"].map((item) => (
-              <Link
-                key={item}
-                href={`/${item.toLowerCase()}`}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                {item}
-              </Link>
-            ))}
-
-            <div className="pt-3 border-t">
+        <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl">
+          <div className="flex flex-col gap-1 px-4 py-3">
+            {/* Only property types in mobile menu */}
+            <div className="py-2">
+              <p className="px-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                Property Types
+              </p>
               {LOCATIONS.map((location) => (
                 <button
                   key={location}
@@ -123,11 +110,11 @@ export default function Navbar() {
                     setActiveLocation(location);
                     setOpen(false);
                   }}
-                  className={`w-full text-left rounded-xl px-4 py-2 text-sm transition
+                  className={`w-full text-left rounded-xl px-4 py-3 text-sm transition-all duration-300
                     ${
                       activeLocation === location
-                        ? "bg-black text-white"
-                        : "hover:bg-gray-100"
+                        ? "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md"
+                        : "hover:bg-gray-50 text-gray-600"
                     }`}
                 >
                   {location}
