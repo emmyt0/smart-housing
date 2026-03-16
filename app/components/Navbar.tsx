@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, User, Globe, Home } from "lucide-react";
+import { Menu, X, User, Globe, Home, HelpCircle, Mail } from "lucide-react";
 
 const LOCATIONS = [
   "Studio (1+0)",
@@ -38,13 +38,29 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Empty div to maintain spacing - no navigation links */}
-          <div className="hidden md:block"></div>
+          {/* Desktop Navigation Links - Help Center & Contact */}
+          <div className="hidden md:flex items-center gap-6">
+            <Link
+              href="/help-center"
+              className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 group px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-300"
+            >
+              <HelpCircle size={18} className="text-gray-400 group-hover:text-red-500 transition-colors" />
+              <span>Help Center</span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-red-500 to-red-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            </Link>
+            
+            <Link
+              href="/help-center"
+              className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 group px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-300"
+            >
+              <Mail size={18} className="text-gray-400 group-hover:text-red-500 transition-colors" />
+              <span>Contact Us</span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-red-500 to-red-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            </Link>
+          </div>
 
           {/* Actions with modern styling */}
           <div className="flex items-center gap-3">
-            
-
             {/* Language with modern design */}
             <button
               onClick={() => setLang(lang === "EN" ? "TR" : "EN")}
@@ -98,7 +114,30 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl">
           <div className="flex flex-col gap-1 px-4 py-3">
-            {/* Only property types in mobile menu */}
+            {/* Help & Support Section */}
+            <div className="py-2 border-b border-gray-100">
+              <p className="px-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                Support
+              </p>
+              <Link
+                href="/help-center"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-300"
+              >
+                <HelpCircle size={18} className="text-gray-400" />
+                Help Center
+              </Link>
+              <Link
+                href="/contact-us"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-300"
+              >
+                <Mail size={18} className="text-gray-400" />
+                Contact Us
+              </Link>
+            </div>
+
+            {/* Property types in mobile menu */}
             <div className="py-2">
               <p className="px-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                 Property Types
