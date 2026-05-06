@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { X } from "lucide-react";
+import { useAuth } from "../Provider"; // ✅ IMPORT THIS
 
 interface LoginModalProps {
   open: boolean;
@@ -18,6 +19,8 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const { login } = useAuth(); // ✅ GET LOGIN FUNCTION
 
   if (!open) return null;
 
@@ -53,11 +56,12 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
         return;
       }
 
-      // ✅ LOGIN FLOW
+      // ✅ LOGIN FLOW (FIXED)
       if (isLogin) {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-        }
+        console.log("LOGIN RESPONSE:", data);
+
+        // 🔥 THIS updates global session + navbar
+        login(data.user, data.token);
 
         setLoading(false);
         onClose();
@@ -67,12 +71,9 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
       // ✅ REGISTER FLOW
       setSuccess("✅ Account created successfully. Please login.");
 
-      // clear inputs
       setName("");
       setEmail("");
       setPassword("");
-
-      // switch to login mode
       setIsLogin(true);
 
       setLoading(false);
@@ -86,8 +87,7 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       
-      {/* MODAL */}
-      <div className="relative w-full max-w-md rounded-2xl bg-white shadow-2xl p-6 animate-in fade-in zoom-in-95">
+      <div className="relative w-full max-w-md rounded-2xl bg-white shadow-2xl p-6">
         
         {/* CLOSE */}
         <button
@@ -108,14 +108,14 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
             : "Sign up to find your perfect apartment"}
         </p>
 
-        {/* ERROR MESSAGE */}
+        {/* ERROR */}
         {error && (
           <p className="text-red-500 text-sm mb-3 text-center">
             {error}
           </p>
         )}
 
-        {/* SUCCESS MESSAGE */}
+        {/* SUCCESS */}
         {success && (
           <p className="text-green-600 text-sm mb-3 text-center">
             {success}
@@ -132,7 +132,7 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full rounded-lg border px-4 py-2.5 text-sm"
             />
           )}
 
@@ -142,7 +142,7 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full rounded-lg border px-4 py-2.5 text-sm"
           />
 
           <input
@@ -151,14 +151,13 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full rounded-lg border px-4 py-2.5 text-sm"
           />
 
-          {/* BUTTON */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-gradient-to-r from-red-500 to-red-600 py-2.5 text-white font-semibold shadow-md hover:shadow-lg transition disabled:opacity-70"
+            className="w-full rounded-lg bg-red-500 py-2.5 text-white font-semibold"
           >
             {loading
               ? "Please wait..."
@@ -178,7 +177,7 @@ export default function LoginModal({ open, onClose }: LoginModalProps) {
               setError("");
               setSuccess("");
             }}
-            className="ml-1 font-semibold text-red-500 hover:underline"
+            className="ml-1 font-semibold text-red-500"
           >
             {isLogin ? "Sign up" : "Login"}
           </button>

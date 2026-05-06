@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import ChatBot from "./components/ChatBot";
+import { AppProvider } from "./Provider";
+
 import "./globals.css";
 
 // Initialize the Outfit font
@@ -27,8 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={outfit.variable}>
       <body className="font-sans antialiased">
-        {children}
-        <ChatBot />
+        <AppProvider>
+          {children}
+          <ChatBot />
+        </AppProvider>
       </body>
     </html>
   );
