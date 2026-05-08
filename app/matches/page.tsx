@@ -16,12 +16,12 @@ export default function MatchesPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
+    <div className="min-h-screen bg-gray-50  ">
       <Navbar />
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto p-4">
 
         <h1 className="text-3xl font-bold mb-2">
-          🎯 Your Smart Matches
+         Your Results
         </h1>
 
         <p className="text-gray-500 mb-8">

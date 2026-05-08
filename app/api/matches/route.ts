@@ -5,14 +5,18 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const { budget } = body;
+    const {
+      budget,
+      apartmentType,
+      location,
+    } = body;
 
     const client = await clientPromise;
     const db = client.db("testdb");
 
     const query: any = {};
 
-    /* ================= PRICE MATCHING ================= */
+    /* ================= PRICE ================= */
 
     if (budget === "low") {
       query["pricing.amount"] = {
@@ -35,6 +39,37 @@ export async function POST(req: NextRequest) {
       };
     }
 
+    /* ================= PROPERTY TYPE ================= */
+
+    if (apartmentType) {
+      const typeMap: Record<string, string> = {
+        studio: "Studio (1+0)",
+        "1+1": "1+1 Apartment",
+        "2+1": "2+1 Apartment",
+        "3+1": "3+1 Apartment",
+        "single-room": "Single Room",
+      };
+
+      query.propertyType = typeMap[apartmentType];
+    }
+
+    /* ================= LOCATION ================= */
+
+    if (location) {
+      const locationMap: Record<string, string> = {
+        yesilyurt: "Yeşilyurt",
+        "lefke-merkezi": "Lefke Merkezi",
+        doganci: "Doğancı",
+        yedidalga: "Yedidalga",
+        gemikonagi: "Gemikonagi",
+      };
+
+      query["location.addressText"] = {
+        $regex: locationMap[location],
+        $options: "i",
+      };
+    }
+
     /* ================= FETCH ================= */
 
     const properties = await db
@@ -42,8 +77,6 @@ export async function POST(req: NextRequest) {
       .find(query)
       .limit(20)
       .toArray();
-
-    /* ================= FORMAT ================= */
 
     const formatted = properties.map((property) => ({
       ...property,
@@ -62,7 +95,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to match properties",
+        error: "Failed to fetch matches",
       },
       {
         status: 500,
