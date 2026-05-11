@@ -131,7 +131,7 @@ export default function Footer() {
               <div className="flex gap-3">
                 <Mail className="w-5 h-5 text-gray-500" />
                 <a className="text-sm text-gray-400 hover:text-white" href="mailto:support@eulhousing.com">
-                  support@eulhousing.com
+                  support@smart-shousing.com
                 </a>
               </div>
 
