@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Menu,
   X,
@@ -14,20 +15,28 @@ import {
 import LoginModal from "./LoginModal";
 import { useAuth } from "../Provider";
 
+// Update LOCATIONS to map with proper slugs
 const LOCATIONS = [
-  "Studio (1+0)",
-  "1+1",
-  "2+1",
-  "3+1",
-  "Single Room",
+  { label: "Studio (1+0)", slug: "studio" },
+  { label: "1+1", slug: "1+1" },
+  { label: "2+1", slug: "2+1" },
+  { label: "3+1", slug: "3+1" },
+  { label: "Single Room", slug: "single-room" },
 ];
 
 export default function Navbar() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [activeLocation, setActiveLocation] = useState("Gemikonagi");
   const [loginOpen, setLoginOpen] = useState(false);
 
   const { user, logout } = useAuth();
+
+  // Handle navigation to property type page
+  const handlePropertyTypeClick = (slug: string, label: string) => {
+    setActiveLocation(label);
+    router.push(`/property-type/${slug}`);
+  };
 
   return (
     <>
@@ -124,24 +133,24 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* LOCATION PILLS */}
+          {/* LOCATION PILLS - Updated to navigate to property types */}
           <div className="hidden md:flex justify-center pb-4">
             <div className="flex gap-2 overflow-x-auto bg-gray-50 p-1.5 rounded-2xl">
               {LOCATIONS.map((location) => {
-                const active = activeLocation === location;
+                const active = activeLocation === location.label;
 
                 return (
                   <button
-                    key={location}
-                    onClick={() => setActiveLocation(location)}
-                    className={`px-5 py-2.5 rounded-xl text-sm transition
+                    key={location.label}
+                    onClick={() => handlePropertyTypeClick(location.slug, location.label)}
+                    className={`px-5 py-2.5 rounded-xl text-sm transition whitespace-nowrap
                       ${
                         active
                           ? "bg-red-500 text-white"
                           : "text-gray-600 hover:bg-white"
                       }`}
                   >
-                    {location}
+                    {location.label}
                   </button>
                 );
               })}
@@ -149,29 +158,45 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* MOBILE MENU */}
+        {/* MOBILE MENU - Updated with navigation */}
         {open && (
           <div className="md:hidden border-t bg-white">
             <div className="flex flex-col px-4 py-3">
 
-              <Link href="/help-center" onClick={() => setOpen(false)} className="py-2">
+              <Link 
+                href="/help-center" 
+                onClick={() => setOpen(false)} 
+                className="py-2 hover:text-red-500 transition"
+              >
                 Help Center
               </Link>
 
-              <Link href="/about-us" onClick={() => setOpen(false)} className="py-2">
-                Contact Us
+              <Link 
+                href="/about-us" 
+                onClick={() => setOpen(false)} 
+                className="py-2 hover:text-red-500 transition"
+              >
+                About Us
               </Link>
 
+              {/* Divider */}
+              <div className="my-2 h-px bg-gray-100" />
+              
+              {/* Property Types in Mobile Menu */}
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider py-2">
+                Property Types
+              </p>
+              
               {LOCATIONS.map((location) => (
                 <button
-                  key={location}
+                  key={location.label}
                   onClick={() => {
-                    setActiveLocation(location);
+                    handlePropertyTypeClick(location.slug, location.label);
                     setOpen(false);
                   }}
-                  className="text-left py-2"
+                  className="text-left py-2 hover:text-red-500 transition"
                 >
-                  {location}
+                  {location.label}
                 </button>
               ))}
             </div>
