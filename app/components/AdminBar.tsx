@@ -10,6 +10,7 @@ import {
   HandCoins,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 type AdminBarProps = {
   onMenuClick: (menu: string) => void;
@@ -89,10 +90,9 @@ const AdminBar = ({ onMenuClick }: AdminBarProps) => {
 
         {/* Logo + Admin */}
         <div className="flex flex-col items-center mb-8">
-          <span className="text-red-600 py-4 ">
-              <p className=" text-2xl  font-bold"> lefke-aprtments</p>
-              
-            </span>
+          <Link href="/" className="text-red-600 py-4 hover:opacity-80 transition-opacity">
+            <p className="text-2xl font-bold">lefke-aprtments</p>
+          </Link>
         </div>
 
         {/* Menu */}
