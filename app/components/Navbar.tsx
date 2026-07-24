@@ -105,7 +105,7 @@ export default function Navbar() {
 
               <span className="flex flex-col">
                 <p className="text-xl font-bold">
-                  smart-housing
+                  apartments
                 </p>
 
                 <p className="text-xs text-gray-500">
