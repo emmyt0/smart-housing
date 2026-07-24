@@ -31,7 +31,6 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <AppProvider>
           {children}
-          <ChatBot />
         </AppProvider>
       </body>
     </html>
